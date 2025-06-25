@@ -31,3 +31,8 @@ class BankAccount: # Define the BankAccount class
             self._balance -= amount
         else:
             raise ValueError("Insufficient funds or invalid amount.")
+        
+    # Return the current balance of the account
+    def get_balance(self):
+        return self._balance
+
