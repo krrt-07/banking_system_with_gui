@@ -36,3 +36,7 @@ class BankAccount: # Define the BankAccount class
     def get_balance(self):
         return self._balance
 
+    # Check if the provided account name and password match the stored credentials
+    def verify_credentials(self, name, password):
+        return self._acct_name == name and self._password == password
+
