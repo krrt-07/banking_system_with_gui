@@ -23,3 +23,11 @@ class BankAccount: # Define the BankAccount class
     def deposit(self, amount):
         if amount > 0:
             self._balance += amount
+
+    # Subtract the specified amount from the balance if it's valid and sufficient
+    # Raise an error if the amount is invalid or exceeds the current balance
+    def withdraw(self, amount):
+        if amount > 0 and self._balance >= amount:
+            self._balance -= amount
+        else:
+            raise ValueError("Insufficient funds or invalid amount.")
