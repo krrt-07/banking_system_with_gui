@@ -18,3 +18,8 @@ class BankAccount: # Define the BankAccount class
     def get_full_name(self):
         middle_initial = (self._middle_name[0] + ".") if self._middle_name else ""
         return f"{self._first_name} {middle_initial} {self._last_name}".strip()
+    
+    # Add the specified amount to the account balance if it is greater than zero
+    def deposit(self, amount):
+        if amount > 0:
+            self._balance += amount
