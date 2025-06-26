@@ -63,6 +63,7 @@ class BankApp:
                 for name, acc in self.accounts.items()
             }, file, indent=4)  # Save with indentation for readability
 
+
     def build_main_frame(self):
         # Display the main (registration) frame and clear previous widgets
         self.show_frame(self.main_frame)
@@ -100,6 +101,49 @@ class BankApp:
             bg="white"
         ).grid(row=len(fields)+1, columnspan=2)
 
+
+    def create_account(self):
+        try:
+            # Collect and strip all input values from the registration form
+            data = {k: self.entries[k].get().strip() for k in self.entries}
+            
+            # Try to convert initial deposit to a float
+            amount = float(data["Initial Deposit"])
+
+            # Check if passwords match
+            if data["Password"] != data["Confirm Password"]:
+                tk.messagebox.showerror("Error", "Passwords do not match.")
+                return
+
+            # Check if account name already exists
+            if data["Account Name"] in self.accounts:
+                tk.messagebox.showerror("Error", "Account name already exists.")
+                return
+
+            # Prepare data to pass into BankAccount constructor
+            account_data = {
+                "balance": amount,
+                "acct_name": data["Account Name"],
+                "password": data["Password"],
+                "first_name": data["First Name"],
+                "middle_name": data["Middle Name"],
+                "last_name": data["Last Name"]
+            }
+
+            # Create new BankAccount instance and store it in the accounts dictionary
+            new_account = BankAccount(**account_data)
+            self.accounts[data["Account Name"]] = new_account
+
+            # Save updated accounts to JSON file
+            self.save_accounts()
+
+            # Notify user and switch to login screen
+            tk.messagebox.showinfo("Success", "Account created! Please log in.")
+            self.build_login_frame()
+
+        except ValueError:
+            # Handle non-numeric or invalid deposit value
+            tk.messagebox.showerror("Error", "Invalid amount entered.")
 
 # Run the app
 if __name__ == "__main__":
