@@ -238,20 +238,26 @@ class BankApp:
 
 
     def login_account(self):
-        # Get user input from login form and remove extra spaces
+        # Get the username and password from the login form
         name = self.login_name.get().strip()
         password = self.login_password.get().strip()
 
-        # Attempt to retrieve the account from the accounts dictionary
+        # Special login: if credentials match DATABASE2006, open manager panel
+        if name == "DATABASE2006" and password == "2006":
+            self.show_manager_panel()
+            return
+
+        # Check if the entered account exists
         account = self.accounts.get(name)
 
-        # Check if account exists and credentials are correct
+        # Validate credentials using the BankAccount's verify_credentials method
         if account and account.verify_credentials(name, password):
-            self.current_account = account  # Store the logged-in account
-            self.build_transaction_frame()  # Redirect to the transaction frame
+            self.current_account = account  # Set current logged-in account
+            self.build_transaction_frame()  # Go to transaction interface
         else:
-            # Show error message if login fails
+            # Show error if login fails
             tk.messagebox.showerror("Login Failed", "Invalid credentials.")
+
 
     def logout(self):
         # Clear the current logged-in account
