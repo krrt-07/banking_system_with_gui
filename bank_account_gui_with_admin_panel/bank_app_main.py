@@ -102,6 +102,40 @@ class BankApp:
         ).grid(row=len(fields)+1, columnspan=2)
 
 
+    def build_login_frame(self):
+        # Show the login frame and clear any existing widgets
+        self.show_frame(self.login_frame)
+        for widget in self.login_frame.winfo_children():
+            widget.destroy()  # Remove previous widgets to prevent duplication
+
+        # Label and entry for Account Name
+        tk.Label(self.login_frame, text="Account Name:", bg="white").grid(row=0, column=0, pady=5)
+        self.login_name = tk.Entry(self.login_frame)
+        self.login_name.grid(row=0, column=1, pady=5)
+
+        # Label and entry for Password
+        tk.Label(self.login_frame, text="Password:", bg="white").grid(row=1, column=0, pady=5)
+        self.login_password = tk.Entry(self.login_frame, show="*")  # Mask input for security
+        self.login_password.grid(row=1, column=1, pady=5)
+
+        # Login button that triggers login_account() method
+        tk.Button(
+            self.login_frame,
+            text="Login",
+            command=self.login_account,
+            bg="#800000",
+            fg="white"
+        ).grid(row=2, columnspan=2, pady=10)
+
+        # Button to go back to the registration screen
+        tk.Button(
+            self.login_frame,
+            text="Back",
+            command=self.build_main_frame,
+            bg="white"
+        ).grid(row=3, columnspan=2)
+
+
     def create_account(self):
         try:
             # Collect and strip all input values from the registration form
