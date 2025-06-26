@@ -179,6 +179,24 @@ class BankApp:
             # Handle non-numeric or invalid deposit value
             tk.messagebox.showerror("Error", "Invalid amount entered.")
 
+
+    def login_account(self):
+        # Get user input from login form and remove extra spaces
+        name = self.login_name.get().strip()
+        password = self.login_password.get().strip()
+
+        # Attempt to retrieve the account from the accounts dictionary
+        account = self.accounts.get(name)
+
+        # Check if account exists and credentials are correct
+        if account and account.verify_credentials(name, password):
+            self.current_account = account  # Store the logged-in account
+            self.build_transaction_frame()  # Redirect to the transaction frame
+        else:
+            # Show error message if login fails
+            tk.messagebox.showerror("Login Failed", "Invalid credentials.")
+
+
 # Run the app
 if __name__ == "__main__":
     root = tk.Tk()          # Create the main application window
