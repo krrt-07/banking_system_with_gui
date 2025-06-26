@@ -46,3 +46,7 @@ banking_system_with_gui/
 ├── bank_app_main.py           # Main application GUI logic
 
 └── README.md                  # This file
+
+##🙏 Credits
+This project was inspired by Dave Gray's YouTube tutorial on building a Bank System in Python.
+🎥 Big thanks to Dave Gray for the insightful and beginner-friendly content that sparked the idea for this project.
