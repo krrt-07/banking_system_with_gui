@@ -253,6 +253,17 @@ class BankApp:
             # Show error message if login fails
             tk.messagebox.showerror("Login Failed", "Invalid credentials.")
 
+    def logout(self):
+        # Clear the current logged-in account
+        self.current_account = None
+
+        # Save any changes made during the session (optional but safe)
+        self.save_accounts()
+
+        # Redirect the user back to the login screen
+        self.build_login_frame()
+
+
     def deposit(self):
         try:
             # Get the amount entered by the user and convert it to float
