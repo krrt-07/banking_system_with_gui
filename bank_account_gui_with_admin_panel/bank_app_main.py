@@ -136,6 +136,63 @@ class BankApp:
         ).grid(row=3, columnspan=2)
 
 
+    def build_transaction_frame(self):
+        # Display the transaction frame and remove previous widgets
+        self.show_frame(self.transaction_frame)
+        for widget in self.transaction_frame.winfo_children():
+            widget.destroy()  # Clear frame to avoid duplicate UI elements
+
+        # Greeting label showing the full name of the logged-in user
+        tk.Label(
+            self.transaction_frame,
+            text=f"Welcome, {self.current_account.get_full_name()}",
+            font=("Arial", 14),
+            bg="white"
+        ).grid(row=0, columnspan=2, pady=10)
+
+        # Label that will display the user's current balance (updated dynamically)
+        self.balance_label = tk.Label(
+            self.transaction_frame,
+            text="",  # initially empty; updated by self.update_balance()
+            font=("Arial", 12, "bold"),
+            bg="white"
+        )
+        self.balance_label.grid(row=1, columnspan=2)
+
+        self.update_balance()  # Show current balance right after logging in
+
+        # Label and entry for entering deposit or withdrawal amount
+        tk.Label(self.transaction_frame, text="Amount:", bg="white").grid(row=2, column=0)
+        self.transact_amount = tk.Entry(self.transaction_frame)
+        self.transact_amount.grid(row=2, column=1)
+
+        # Deposit button
+        tk.Button(
+            self.transaction_frame,
+            text="Deposit",
+            command=self.deposit,
+            bg="#800000",
+            fg="white"
+        ).grid(row=3, column=0, pady=5)
+
+        # Withdraw button
+        tk.Button(
+            self.transaction_frame,
+            text="Withdraw",
+            command=self.withdraw,
+            bg="#800000",
+            fg="white"
+        ).grid(row=3, column=1, pady=5)
+
+        # Logout button
+        tk.Button(
+            self.transaction_frame,
+            text="Logout",
+            command=self.logout,
+            bg="white"
+        ).grid(row=4, columnspan=2, pady=10)
+
+
     def create_account(self):
         try:
             # Collect and strip all input values from the registration form
