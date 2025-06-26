@@ -63,6 +63,43 @@ class BankApp:
                 for name, acc in self.accounts.items()
             }, file, indent=4)  # Save with indentation for readability
 
+    def build_main_frame(self):
+        # Display the main (registration) frame and clear previous widgets
+        self.show_frame(self.main_frame)
+        for widget in self.main_frame.winfo_children():
+            widget.destroy()  # Remove existing widgets to avoid duplication
+
+        # Define the form fields for registration
+        fields = ["First Name", "Middle Name", "Last Name", "Account Name", "Initial Deposit", "Password", "Confirm Password"]
+        self.entries = {}  # Dictionary to store the entry widgets for each field
+
+        # Create labels and entry fields for each form input
+        for i, field in enumerate(fields):
+            # Create label
+            tk.Label(self.main_frame, text=field + ":", bg="white").grid(row=i, column=0, sticky="e", pady=2)
+            
+            # Create entry; hide input if it's a password field
+            entry = tk.Entry(self.main_frame, show="*" if "Password" in field else None)
+            entry.grid(row=i, column=1, pady=2)
+
+            self.entries[field] = entry  # Store the entry widget for later access
+
+        # Create button to trigger account creation
+        tk.Button(
+            self.main_frame,
+            text="Create Account",
+            command=self.create_account,
+            bg="#800000", fg="white"
+        ).grid(row=len(fields), columnspan=2, pady=10)
+
+        # Create button to switch to login frame
+        tk.Button(
+            self.main_frame,
+            text="Already have an account? Login",
+            command=self.build_login_frame,
+            bg="white"
+        ).grid(row=len(fields)+1, columnspan=2)
+
 
 # Run the app
 if __name__ == "__main__":
