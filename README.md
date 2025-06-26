@@ -39,6 +39,9 @@ A simple GUI-based banking system built using Python and Tkinter. This project s
 ## PROJECT STRUCTURE
 banking_system_with_gui/
 ├── accounts.json              # Stores all account data
+
 ├── bank_account.py            # Contains the BankAccount class
+
 ├── bank_app_main.py           # Main application GUI logic
+
 └── README.md                  # This file
