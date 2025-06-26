@@ -8,18 +8,40 @@ DATA_FILE = "accounts.json"  # File to store account data persistently
 class BankApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Grow a Garden: Banko Sheckles ng PUP (BSP)")  # App window title
-        self.root.configure(bg="#800000")  # Set background color to maroon (PUP theme)
+        self.root.title("Grow a Garden: Banko Sheckles ng PUP (BSP)")  # Set window title
+        self.root.configure(bg="#800000")  # Set maroon background to match PUP theme
 
-        self.accounts = self.load_accounts()  # Load existing accounts from JSON file
-        self.current_account = None  # Will hold the currently logged-in account
+        # Load account data from JSON file
+        self.accounts = self.load_accounts()
+        self.current_account = None  # Will hold the logged-in account object
 
-        # Define main GUI frames
-        self.main_frame = tk.Frame(self.root, bg="white")        # Registration frame
-        self.login_frame = tk.Frame(self.root, bg="white")       # Login frame
-        self.transaction_frame = tk.Frame(self.root, bg="white") # Transaction frame
+        # Add a small slogan label above the title
+        self.grow_label = tk.Label(
+            self.root,
+            text="Grow a Garden",
+            font=("Arial", 8, "bold"),
+            fg="white",
+            bg="#800000"
+        )
+        self.grow_label.pack()
 
-        self.show_frame(self.main_frame)  # Show registration frame by default
+        # Add the main title/header label
+        self.header = tk.Label(
+            self.root,
+            text="Banko Sheckles ng PUP (BSP)",
+            font=("Arial", 16, "bold"),
+            fg="white",
+            bg="#800000"
+        )
+        self.header.pack()
+
+        # Initialize the three main frames of the app
+        self.main_frame = tk.Frame(self.root, bg="white")         # Registration frame
+        self.login_frame = tk.Frame(self.root, bg="white")        # Login frame
+        self.transaction_frame = tk.Frame(self.root, bg="white")  # Transaction frame
+
+        # Start the app on the registration screen
+        self.build_main_frame()
 
     def show_frame(self, frame):
         """Switch to the given frame and hide others."""
