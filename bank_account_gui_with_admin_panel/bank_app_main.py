@@ -275,6 +275,27 @@ class BankApp:
             tk.messagebox.showerror("Error", "Invalid amount.")
 
 
+    def withdraw(self):
+        try:
+            # Get the amount entered by the user and convert it to float
+            amount = float(self.transact_amount.get())
+
+            # Attempt to withdraw the amount from the current account
+            self.current_account.withdraw(amount)
+
+            # Save updated account data to the JSON file
+            self.save_accounts()
+
+            # Show confirmation message
+            tk.messagebox.showinfo("Success", f"₪{amount:.2f} withdrawn.")
+
+            # Update the balance display on the transaction screen
+            self.update_balance()
+
+        except ValueError as e:
+            # Handle invalid input or errors from the withdraw() method (e.g., insufficient funds)
+            tk.messagebox.showerror("Error", str(e))
+
 
 # Run the app
 if __name__ == "__main__":
