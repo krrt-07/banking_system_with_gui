@@ -1,5 +1,6 @@
 import tkinter as tk
 from bank_account import BankAccount  # Import the BankAccount class
+from tkinter import messagebox
 import json
 import os
 
@@ -362,24 +363,25 @@ class BankApp:
 
     def deposit(self):
         try:
-            # Get the amount entered by the user and convert it to float
+            # Get the input amount from the entry field and convert to float
             amount = float(self.transact_amount.get())
 
-            # Perform the deposit on the current account
+            # Call the deposit method on the current logged-in account
             self.current_account.deposit(amount)
 
-            # Save updated account data to the JSON file
+            # Save the updated account information to the JSON file
             self.save_accounts()
 
-            # Show confirmation message
-            tk.messagebox.showinfo("Success", f"₪{amount:.2f} deposited.")
+            # Show confirmation message to the user
+            messagebox.showinfo("Success", f"₪{amount:.2f} deposited.")
 
-            # Update the balance display on the transaction screen
+            # Update the displayed balance on the transaction screen
             self.update_balance()
 
         except ValueError:
-            # Handle invalid input (e.g., letters or empty string)
-            tk.messagebox.showerror("Error", "Invalid amount.")
+            # Handle cases where input is not a valid number (e.g., letters, empty input)
+            messagebox.showerror("Error", "Invalid amount.")
+
 
 
     def withdraw(self):
