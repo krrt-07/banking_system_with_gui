@@ -43,11 +43,13 @@ class BankApp:
         # Start the app on the registration screen
         self.build_main_frame()
 
+
     def show_frame(self, frame):
         """Switch to the given frame and hide others."""
         for f in (self.main_frame, self.login_frame, self.transaction_frame):
             f.pack_forget()  # Hide all frames
         frame.pack(padx=20, pady=20)  # Show the selected frame
+
 
     def load_accounts(self):
         """Load account data from the JSON file and return a dictionary of BankAccount objects."""
@@ -70,6 +72,7 @@ class BankApp:
             for name, data in raw_data.items()
         }
 
+
     def save_accounts(self):
         """Save all BankAccount objects into the JSON file for persistence."""
         with open(DATA_FILE, "w") as file:
@@ -84,6 +87,15 @@ class BankApp:
                 }
                 for name, acc in self.accounts.items()
             }, file, indent=4)  # Save with indentation for readability
+
+
+    def show_frame(self, frame):
+        # Hide all frames first to ensure only one is visible at a time
+        for f in (self.main_frame, self.login_frame, self.transaction_frame):
+            f.pack_forget()
+
+        # Display the selected frame with padding
+        frame.pack(padx=20, pady=20)
 
 
     def build_main_frame(self):
@@ -337,7 +349,6 @@ class BankApp:
         ).pack(pady=10)
 
 
-
     def logout(self):
         # Clear the current logged-in account
         self.current_account = None
@@ -391,6 +402,7 @@ class BankApp:
         except ValueError as e:
             # Handle invalid input or errors from the withdraw() method (e.g., insufficient funds)
             tk.messagebox.showerror("Error", str(e))
+
 
     def update_balance(self):
         # Get the current balance from the logged-in account
