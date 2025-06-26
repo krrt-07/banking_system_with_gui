@@ -296,6 +296,13 @@ class BankApp:
             # Handle invalid input or errors from the withdraw() method (e.g., insufficient funds)
             tk.messagebox.showerror("Error", str(e))
 
+    def update_balance(self):
+        # Get the current balance from the logged-in account
+        balance = self.current_account.get_balance()
+
+        # Update the label in the transaction frame to show the latest balance
+        self.balance_label.config(text=f"Balance: ₪{balance:.2f}")
+
 
 # Run the app
 if __name__ == "__main__":
