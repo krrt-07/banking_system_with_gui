@@ -259,6 +259,63 @@ class BankApp:
             tk.messagebox.showerror("Login Failed", "Invalid credentials.")
 
 
+    def show_manager_panel(self):
+        # Create a new window for the database manager
+        manager_window = tk.Toplevel(self.root)
+        manager_window.title("Database Manager Panel")
+        manager_window.configure(bg="white")
+
+        # Title label
+        tk.Label(manager_window, text="All Accounts", font=("Arial", 12, "bold"), bg="white").pack(pady=5)
+
+        # Display information about all accounts
+        accounts_info = ""
+        for user, acc in self.accounts.items():
+            accounts_info += f"{acc.get_full_name()} | Username: {user} | Balance: ₪{acc.get_balance():.2f}\n"
+
+        # If no accounts exist, show a placeholder message
+        info_label = tk.Label(
+            manager_window,
+            text=accounts_info or "No accounts found.",
+            bg="white",
+            justify="left"
+        )
+        info_label.pack(padx=10, pady=5)
+
+        # Input field to enter username of the account to delete
+        tk.Label(manager_window, text="Username to Delete:", bg="white").pack()
+        self.delete_entry = tk.Entry(manager_window)
+        self.delete_entry.pack(pady=5)
+
+        # Define the delete_account function to handle deletion logic
+        def delete_account():
+            username = self.delete_entry.get().strip()
+            if username in self.accounts:
+                # Confirm with the manager before deleting the account
+                confirm = tk.messagebox.askyesno(
+                    "Confirm Deletion",
+                    f"Are you sure you want to delete account '{username}'?"
+                )
+                if confirm:
+                    del self.accounts[username]         # Delete the account
+                    self.save_accounts()                # Save changes
+                    tk.messagebox.showinfo("Deleted", f"Account '{username}' has been deleted.")
+                    manager_window.destroy()            # Close the window to refresh it
+            else:
+                # Show error if username does not exist
+                tk.messagebox.showerror("Error", f"No account found with username '{username}'.")
+
+        # Button to trigger the delete_account function
+        tk.Button(
+            manager_window,
+            text="Delete Account",
+            command=delete_account,
+            bg="red",
+            fg="white"
+        ).pack(pady=10)
+
+
+
     def logout(self):
         # Clear the current logged-in account
         self.current_account = None
