@@ -253,6 +253,28 @@ class BankApp:
             # Show error message if login fails
             tk.messagebox.showerror("Login Failed", "Invalid credentials.")
 
+    def deposit(self):
+        try:
+            # Get the amount entered by the user and convert it to float
+            amount = float(self.transact_amount.get())
+
+            # Perform the deposit on the current account
+            self.current_account.deposit(amount)
+
+            # Save updated account data to the JSON file
+            self.save_accounts()
+
+            # Show confirmation message
+            tk.messagebox.showinfo("Success", f"₪{amount:.2f} deposited.")
+
+            # Update the balance display on the transaction screen
+            self.update_balance()
+
+        except ValueError:
+            # Handle invalid input (e.g., letters or empty string)
+            tk.messagebox.showerror("Error", "Invalid amount.")
+
+
 
 # Run the app
 if __name__ == "__main__":
